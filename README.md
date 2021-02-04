@@ -1,0 +1,2 @@
+# Twitter-Clone
+Implemented a Twitter server engine using suave framework which provides support for both Websockets and Http and performed REST operations like GET and POST. The server engine uses an actor to push the live feeds to the online users through websockets. Implemented a simple client - UI in the browser, using HTML and JavaScript which invokes connections with the server using websockets and http.
