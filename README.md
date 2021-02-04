@@ -3,7 +3,8 @@ Implemented a Twitter server engine using suave framework which provides support
 
 ## Commands to Run ##
 First have to start the server and then client/clients as required. Server always runs on port 8080 by default. 
-NOTE: ​It is best to use incognito browser to avoid browser alerts for unsafe password use.
+​NOTE: ​It is best to use incognito browser to avoid browser alerts for unsafe password use.
+
 packages might be needed: dotnet add package [ Suave --version 2.5.6 or Akka.FSharp or FSharp.Json or Newtonsoft.Json ]
 
 #### Server ####
@@ -31,20 +32,21 @@ When the user is following another user, both of them get their respective notif
 
 ## Where did we use HTTP and REST? ## 
 Services where it needs an immediate response for their requests or where there are no further actions delegated to be performed on the server.
-Register (/register) - Registers a new user and stores the record.
-Login (/login) - Logins the registered user and if the user is not registered then responds with an error.
-Query (/search) - Maximum upto Top 10 tweets having the respective hashTag or mentionedUser is responded if present.
-Follow (/follow) - User sends a post request to follow another user.
-Tweet (/tweet) - User posts a tweet.
-The below image highlights all the API endpoints used in the code. All the endpoints are of type POST except the initial Login page and search service which are of GET types. Finally, /livefeed represents the websocket point.
+* Register (/register) - Registers a new user and stores the record.
+* Login (/login) - Logins the registered user and if the user is not registered then responds with an error.
+* Query (/search) - Maximum upto Top 10 tweets having the respective hashTag or mentionedUser is responded if present.
+* Follow (/follow) - User sends a post request to follow another user.
+* Tweet (/tweet) - User posts a tweet.
  
 ### JSON objects: ### 
 For modularization purposes, we used only 2 kinds of objects one for request and another for response.
+```json
 ​Request​ from client:
 {
   ‘userID’: string,
   ‘value’: string 
 }
+```
 
 Description of the keys and its purpose:
 userID: User ID of the logged in user
@@ -57,21 +59,23 @@ for retweet: Re-Tweet message
 for query: either the hashtag or mentioned user
   
 ​Response​ from server: 
+```json
 {
   ‘userID’: string, 
   ‘service’: string, 
   ‘message’: string, 
   ‘code’: string
 }
+```
 
 Description of the keys and its purpose:
-userID: user ID of the user performing the service
-service: One of the following services - Register, Login, Follow, Tweet, ReTweet, Query, LiveFeed. 
-message: Response messages for the actions performed, the value of the field will be the following:
-  for registration: Either user is registered successfully or not
-  for login: Either user is logged in successfully or has failed because of incorrect password or user itself is not registered earlier.
-  for follow: If the user ID and follower ID are registered users and if the user ID is added to the follower ID’s set properly or not.
-  for tweet: If the tweet is posted by a registered user or not and is parsed correctly for hashtags or mentioned users.
-  for retweet: If the tweet is posted by a registered user or not.
-  for query: if the hashtag or mentioned user is present then maximum upto their top 10 tweets, if not error response.
-code: Either ‘OK’ for successful response or ‘FAIL’ for error responses, mainly to distinguish at the client side.
+* userID: user ID of the user performing the service
+* service: One of the following services - Register, Login, Follow, Tweet, ReTweet, Query, LiveFeed. 
+* message: Response messages for the actions performed, the value of the field will be the following:
+  * for registration: Either user is registered successfully or not
+  * for login: Either user is logged in successfully or has failed because of incorrect password or user itself is not registered earlier.
+  * for follow: If the user ID and follower ID are registered users and if the user ID is added to the follower ID’s set properly or not.
+  * for tweet: If the tweet is posted by a registered user or not and is parsed correctly for hashtags or mentioned users.
+  * for retweet: If the tweet is posted by a registered user or not.
+  * for query: if the hashtag or mentioned user is present then maximum upto their top 10 tweets, if not error response.
+* code: Either ‘OK’ for successful response or ‘FAIL’ for error responses, mainly to distinguish at the client side.
