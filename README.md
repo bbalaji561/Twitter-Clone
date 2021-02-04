@@ -75,11 +75,3 @@ message: Response messages for the actions performed, the value of the field wil
   for retweet: If the tweet is posted by a registered user or not.
   for query: if the hashtag or mentioned user is present then maximum upto their top 10 tweets, if not error response.
 code: Either ‘OK’ for successful response or ‘FAIL’ for error responses, mainly to distinguish at the client side.
-
-### Snapshots of request/response types: ### 
-#### GET: ####
-   
-#### POST: ####
-
-#### Websocket: ####
- 
